@@ -56,6 +56,8 @@ tbl_uvregression(
 
 
 
+##Figure
+hist(covid_testing$age)
 
 
 
