@@ -61,6 +61,30 @@ hist(covid_testing$age)
 
 
 
+##Write and run function (I chose to find the mean patients' age in months)
+
+mean.age.in.months <- function(x) {
+	l <- length(x)
+	mean <- sum(x)/l
+	mean.in.months <- mean*12
+	return(mean.in.months)
+}
+
+mean.age.in.months(x = covid_testing$age)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
