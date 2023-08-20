@@ -19,7 +19,7 @@ data(package = "medicaldata")
 covid_testing <- medicaldata::covid_testing
 
 
-##Sumary Table
+##Summary Table
 install.packages("gtsummary")
 library(gtsummary)
 
@@ -39,4 +39,26 @@ Descriptive_Table <- tbl_summary(
 	bold_labels() |>
 	modify_footnote(update = everything() ~ NA) |>
 	modify_header(label = "**Variable**", p.value = "**P**")
+
+
+
+##Regression
+
+tbl_uvregression(
+	covid_testing,
+	y = age,
+	include = c(col_rec_tat, rec_ver_tat),
+	label = list(
+		col_rec_tat ~ "Time elapsed, collect time to receive time",
+		rec_ver_tat ~ "Time elapsed,  receive time to verification time"
+	),
+	method = lm)
+
+
+
+
+
+
+
+
 
