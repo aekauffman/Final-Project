@@ -23,7 +23,7 @@ covid_testing <- medicaldata::covid_testing
 install.packages("gtsummary")
 library(gtsummary)
 
-tbl_summary(
+Descriptive_Table <- tbl_summary(
 	covid_testing,
 	by = result,
 	include = c(age, gender, patient_class),
@@ -32,8 +32,11 @@ tbl_summary(
 		gender ~ "Patient Gender",
 		patient_class ~ "Patient Class"
 	),
+	missing_text = "Missing") |>
 	add_p(test = list(all_continuous() ~ "t.test",
 										all_categorical() ~ "chisq.test")) |>
 	add_overall(col_label = "**Total**") |>
- )
+	bold_labels() |>
+	modify_footnote(update = everything() ~ NA) |>
+	modify_header(label = "**Variable**", p.value = "**P**")
 
