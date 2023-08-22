@@ -9,7 +9,7 @@ usethis::create_github_token()
 gitcreds::gitcreds_set()
 
 
-##Install Dataset
+##Install Dataset from medicaldata Github
 
 install.packages("medicaldata")
 library(medicaldata)
