@@ -18,13 +18,13 @@ table1 <- tbl_summary(
 		gender ~ "Patient Gender",
 		patient_class ~ "Patient Class"
 	),
-  missing_text = "Missing") |> 
-  add_p(test = list(all_continuous() ~ "t.test", 
-                    all_categorical() ~ "chisq.test")) |> 
-  add_overall(col_label = "**Total**") |> 
-  bold_labels() |> 
-  modify_footnote(update = everything() ~ NA) |> 
-  modify_header(label = "**Variable**", p.value = "**P**")
+	missing_text = "Missing") |>
+	add_p(test = list(all_continuous() ~ "t.test",
+										all_categorical() ~ "chisq.test")) |>
+	add_overall(col_label = "**Total**") |>
+	bold_labels() |>
+	modify_footnote(update = everything() ~ NA) |>
+	modify_header(label = "**Variable**", p.value = "**P**")
 
 knitr::kable(table1)
 ```
@@ -62,12 +62,9 @@ neg_age <- inline_text(table1, variable = "age",
 
 The average age of patients with positive Covid tests (`r pos_age`) was greater than the average age of patients with negative Covid tests (`r neg_age`) patients tested positive for Covid-19.
 
-
 ```{r}
 stats <- list(n = nrow(table1),
               mean_age = mean(table1$age))
 ```
 
 There were `r stats$n` participants with a mean age of `r stats$mean_age`.
-
-
