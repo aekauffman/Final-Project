@@ -4,23 +4,70 @@ format: html
 editor: visual
 ---
 
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+## Final Project Table
 
 ```{r}
-1 + 1
-```
+#| label: tbl-one
+#| tbl-cap: "Covid results"
+table1 <- tbl_summary(
+	covid_testing,
+	by = result,
+	include = c(age, gender, patient_class),
+	label = list(
+		age ~ "Patient Age",
+		gender ~ "Patient Gender",
+		patient_class ~ "Patient Class"
+	),
+  missing_text = "Missing") |> 
+  add_p(test = list(all_continuous() ~ "t.test", 
+                    all_categorical() ~ "chisq.test")) |> 
+  add_overall(col_label = "**Total**") |> 
+  bold_labels() |> 
+  modify_footnote(update = everything() ~ NA) |> 
+  modify_header(label = "**Variable**", p.value = "**P**")
 
-You can add options to executable code like this
+knitr::kable(table1)
+```
 
 ```{r}
-#| echo: false
-2 * 2
+#| label: regression
+#| tbl-cap: "Covid results"
+figure1 <- tbl_uvregression(
+	covid_testing,
+	y = age,
+	include = c(col_rec_tat, rec_ver_tat),
+	label = list(
+		col_rec_tat ~ "Time elapsed, collect time to receive time",
+		rec_ver_tat ~ "Time elapsed,  receive time to verification time"
+	),
+	method = lm)
+knitr::kable(figure1)
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+```{r}
+#| label: fig-one
+hist(covid_testing$age)
+```
+
+```{r}
+pos_age <- inline_text(table1, variable = "age", 
+                         column = "positive")
+neg_age <- inline_text(table1, variable = "age", 
+                         column = "negative")
+```
+
+@tbl-one contains a table of demographics by Covid test result, including age, gender, and patient class.
+
+@fig-one contains a histogram of Covid-testing by patient age.
+
+The average age of patients with positive Covid tests (`r pos_age`) was greater than the average age of patients with negative Covid tests (`r neg_age`) patients tested positive for Covid-19.
+
+
+```{r}
+stats <- list(n = nrow(table1),
+              mean_age = mean(table1$age))
+```
+
+There were `r stats$n` participants with a mean age of `r stats$mean_age`.
+
+
