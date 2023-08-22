@@ -9,14 +9,23 @@ usethis::create_github_token()
 gitcreds::gitcreds_set()
 
 
-##Install Dataset from medicaldata Github
+##Install Dataset from medicaldata Github and saving csv
 
 install.packages("medicaldata")
 library(medicaldata)
 
 data(package = "medicaldata")
 
-covid_testing <- medicaldata::covid_testing
+covid <- medicaldata::covid_testing
+
+write.csv(x = covid, file = "covid.csv")
+
+
+##Call file for data analysis from "Here"
+
+install.packages("here")
+covid_testing <- here::here("covid_testing.csv")
+
 
 
 ##Summary Table
@@ -24,7 +33,7 @@ install.packages("gtsummary")
 library(gtsummary)
 
 Descriptive_Table <- tbl_summary(
-	covid_testing,
+covid_testing,
 	by = result,
 	include = c(age, gender, patient_class),
 	label = list(
