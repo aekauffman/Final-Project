@@ -84,6 +84,15 @@ mean.age.in.months(x = covid_testing$age)
 
 
 
+##Adding renv
+install.packages("renv")
+renv::init()
+renv::snapshot()
+
+
+
+
+
 
 
 
