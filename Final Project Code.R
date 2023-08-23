@@ -21,12 +21,12 @@ covid <- medicaldata::covid_testing
 write.csv(x = covid, file = "covid.csv")
 
 
-##Call file for data analysis from "Here"
+##Call file for data analysis from "Here", edit data file
 
 install.packages("here")
-covid_testing <- here::here("covid_testing.csv")
+covid_ <- read.csv(here::here("covid.csv"))
 
-
+covid_testing <- covid_[!(covid_$result == "invalid") ,]
 
 ##Summary Table
 install.packages("gtsummary")

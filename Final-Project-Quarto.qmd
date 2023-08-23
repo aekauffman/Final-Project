@@ -9,22 +9,7 @@ editor: visual
 ```{r}
 #| label: tbl-one
 #| tbl-cap: "Covid results"
-table1 <- tbl_summary(
-	covid_testing,
-	by = result,
-	include = c(age, gender, patient_class),
-	label = list(
-		age ~ "Patient Age",
-		gender ~ "Patient Gender",
-		patient_class ~ "Patient Class"
-	),
-	missing_text = "Missing") |>
-	add_p(test = list(all_continuous() ~ "t.test",
-										all_categorical() ~ "chisq.test")) |>
-	add_overall(col_label = "**Total**") |>
-	bold_labels() |>
-	modify_footnote(update = everything() ~ NA) |>
-	modify_header(label = "**Variable**", p.value = "**P**")
+table1 <- Descriptive_Table
 
 knitr::kable(table1)
 ```
@@ -67,4 +52,4 @@ stats <- list(n = nrow(table1),
               mean_age = mean(table1$age))
 ```
 
-There were `r stats$n` participants with a mean age of `r stats$mean_age`.
+There were `r stats$n` total participants with a mean age of `r stats$mean_age`.
