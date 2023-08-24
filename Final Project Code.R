@@ -28,6 +28,7 @@ covid_ <- read.csv(here::here("covid.csv"))
 
 covid_testing <- covid_[!(covid_$result == "invalid") ,]
 
+
 ##Summary Table
 install.packages("gtsummary")
 library(gtsummary)

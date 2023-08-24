@@ -43,7 +43,7 @@ knitr::kable(table1)
 
 ```{r}
 #| label: regression
-#| tbl-cap: "Covid results"
+#| tbl-cap: "**Covid results**"
 figure1 <- tbl_uvregression(
 	covid_testing,
 	y = age,
@@ -58,6 +58,8 @@ knitr::kable(figure1)
 
 ```{r}
 #| label: fig-one
+#| fig-cap: "**Covid Testing by Age**"
+
 hist(covid_testing$age)
 ```
 
@@ -72,11 +74,11 @@ neg_age <- inline_text(table1, variable = "age",
 
 @fig-one contains a histogram of Covid-testing by patient age.
 
-The average age of patients with positive Covid tests (`r pos_age`) was greater than the average age of patients with negative Covid tests (`r neg_age`) patients tested positive for Covid-19.
+The average (range) age of patients with positive Covid tests (`r pos_age`) was greater than the average (range) age of patients with negative Covid tests (`r neg_age`) patients tested positive for Covid-19.
 
 ```{r}
-stats <- list(n = nrow(table1),
-              mean_age = mean(table1$age))
+stats <- list(n = nrow(covid),
+              mean_age = round(mean(covid$age), digits = 2))
 ```
 
 There were `r stats$n` total participants with a mean age of `r stats$mean_age`.
