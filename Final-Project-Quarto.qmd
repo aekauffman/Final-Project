@@ -5,11 +5,38 @@ editor: visual
 ---
 
 ## Final Project Table
+```{r}
+install.packages("medicaldata")
+library(medicaldata)
+
+data(package = "medicaldata")
+
+covid <- medicaldata::covid_testing
+
+install.packages("gtsummary")
+library(gtsummary)
+
+table1 <- tbl_summary(
+covid,
+	by = result,
+	include = c(age, gender, patient_class),
+	label = list(
+		age ~ "Patient Age",
+		gender ~ "Patient Gender",
+		patient_class ~ "Patient Class"
+	),
+	missing_text = "Missing") |>
+	add_p(test = list(all_continuous() ~ "t.test",
+										all_categorical() ~ "chisq.test")) |>
+	add_overall(col_label = "**Total**") |>
+	bold_labels() |>
+	modify_footnote(update = everything() ~ NA) |>
+	modify_header(label = "**Variable**", p.value = "**P**")
+```
 
 ```{r}
 #| label: tbl-one
 #| tbl-cap: "Covid results"
-table1 <- Descriptive_Table
 
 knitr::kable(table1)
 ```

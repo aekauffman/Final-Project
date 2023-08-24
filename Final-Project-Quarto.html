@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -62,7 +96,298 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="final-project-table" class="level2">
 <h2 class="anchored" data-anchor-id="final-project-table">Final Project Table</h2>
-<p>```{r} #| label: tbl-one #| tbl-cap: “This is a great table” tbl_summary( covid_testing, by = result, include = c(age, gender, patient_class), label = list( age ~ “Patient Age”, gender ~ “Patient Gender”, patient_class ~ “Patient Class” ), missing_text = “Missing”) |&gt; add_p(test = list(all_continuous() ~ “t.test”, all_categorical() ~ “chisq.test”)) |&gt; add_overall(col_label = “**Total**”) |&gt; bold_labels() |&gt; modify_footnote(update = everything() ~ NA) |&gt; modify_header(label = “**Variable**”, p.value = “**P**”) ```</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"medicaldata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The following package(s) will be installed:
+
+- medicaldata [0.2.0]
+
+These packages will be installed into "~/Library/Mobile Documents/com~apple~CloudDocs/Documents/Grad School/Semester 3/R Class/Final-Project/renv/library/R-4.3/aarch64-apple-darwin20".
+
+# Installing packages --------------------------------------------------------
+
+- Installing medicaldata ...                    OK [linked from cache in 0.00035s]
+
+Successfully installed 1 package in 10 milliseconds.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(medicaldata)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="at">package =</span> <span class="st">"medicaldata"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>covid <span class="ot">&lt;-</span> medicaldata<span class="sc">::</span>covid_testing</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"gtsummary"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The following package(s) will be installed:
+
+- gtsummary [1.7.2]
+
+These packages will be installed into "~/Library/Mobile Documents/com~apple~CloudDocs/Documents/Grad School/Semester 3/R Class/Final-Project/renv/library/R-4.3/aarch64-apple-darwin20".
+
+# Installing packages --------------------------------------------------------
+
+- Installing gtsummary ...                      OK [linked from cache in 0.00017s]
+
+Successfully installed 1 package in 3.4 milliseconds.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#BlackLivesMatter</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">&lt;-</span> <span class="fu">tbl_summary</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>covid,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> result,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">include =</span> <span class="fu">c</span>(age, gender, patient_class),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">list</span>(</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        age <span class="sc">~</span> <span class="st">"Patient Age"</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        gender <span class="sc">~</span> <span class="st">"Patient Gender"</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        patient_class <span class="sc">~</span> <span class="st">"Patient Class"</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">missing_text =</span> <span class="st">"Missing"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_p</span>(<span class="at">test =</span> <span class="fu">list</span>(<span class="fu">all_continuous</span>() <span class="sc">~</span> <span class="st">"t.test"</span>,</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>                                        <span class="fu">all_categorical</span>() <span class="sc">~</span> <span class="st">"chisq.test"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">add_overall</span>(<span class="at">col_label =</span> <span class="st">"**Total**"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bold_labels</span>() <span class="sc">|&gt;</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">modify_footnote</span>(<span class="at">update =</span> <span class="fu">everything</span>() <span class="sc">~</span> <span class="cn">NA</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">modify_header</span>(<span class="at">label =</span> <span class="st">"**Variable**"</span>, <span class="at">p.value =</span> <span class="st">"**P**"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>There was an error in 'add_p()/add_difference()' for variable 'age', p-value omitted:
+Error in t.test.formula(age ~ as.factor(result), data = structure(list(: grouping factor must have exactly 2 levels</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning for variable 'patient_class':
+simpleWarning in stats::chisq.test(x = c("inpatient", "not applicable", NA, NA, : Chi-squared approximation may be incorrect</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(table1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="tbl-one" class="anchored">
+<table class="table table-sm table-striped small">
+<caption>Table&nbsp;1: Covid results</caption>
+<colgroup>
+<col style="width: 21%">
+<col style="width: 10%">
+<col style="width: 18%">
+<col style="width: 22%">
+<col style="width: 19%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Variable</strong></th>
+<th style="text-align: left;"><strong>Total</strong></th>
+<th style="text-align: left;"><strong>invalid</strong>, N = 301</th>
+<th style="text-align: left;"><strong>negative</strong>, N = 14,358</th>
+<th style="text-align: left;"><strong>positive</strong>, N = 865</th>
+<th style="text-align: left;"><strong>P</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Patient Age</strong></td>
+<td style="text-align: left;">9 (2, 18)</td>
+<td style="text-align: left;">12 (2, 24)</td>
+<td style="text-align: left;">8 (2, 18)</td>
+<td style="text-align: left;">15 (4, 27)</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Patient Gender</strong></td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">0.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">female</td>
+<td style="text-align: left;">7,832 (50%)</td>
+<td style="text-align: left;">146 (49%)</td>
+<td style="text-align: left;">7,237 (50%)</td>
+<td style="text-align: left;">449 (52%)</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">male</td>
+<td style="text-align: left;">7,692 (50%)</td>
+<td style="text-align: left;">155 (51%)</td>
+<td style="text-align: left;">7,121 (50%)</td>
+<td style="text-align: left;">416 (48%)</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Patient Class</strong></td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">&lt;0.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">admit after surgery-ip</td>
+<td style="text-align: left;">4 (&lt;0.1%)</td>
+<td style="text-align: left;">0 (0%)</td>
+<td style="text-align: left;">4 (&lt;0.1%)</td>
+<td style="text-align: left;">0 (0%)</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">admit after surgery-obs</td>
+<td style="text-align: left;">1 (&lt;0.1%)</td>
+<td style="text-align: left;">0 (0%)</td>
+<td style="text-align: left;">1 (&lt;0.1%)</td>
+<td style="text-align: left;">0 (0%)</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">day surgery</td>
+<td style="text-align: left;">39 (0.5%)</td>
+<td style="text-align: left;">0 (0%)</td>
+<td style="text-align: left;">37 (0.5%)</td>
+<td style="text-align: left;">2 (0.5%)</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">emergency</td>
+<td style="text-align: left;">1,378 (16%)</td>
+<td style="text-align: left;">9 (4.6%)</td>
+<td style="text-align: left;">1,242 (16%)</td>
+<td style="text-align: left;">127 (33%)</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inpatient</td>
+<td style="text-align: left;">3,438 (41%)</td>
+<td style="text-align: left;">89 (46%)</td>
+<td style="text-align: left;">3,246 (41%)</td>
+<td style="text-align: left;">103 (27%)</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">not applicable</td>
+<td style="text-align: left;">1,096 (13%)</td>
+<td style="text-align: left;">14 (7.2%)</td>
+<td style="text-align: left;">1,031 (13%)</td>
+<td style="text-align: left;">51 (13%)</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">observation</td>
+<td style="text-align: left;">723 (8.6%)</td>
+<td style="text-align: left;">28 (14%)</td>
+<td style="text-align: left;">669 (8.5%)</td>
+<td style="text-align: left;">26 (6.7%)</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">outpatient</td>
+<td style="text-align: left;">973 (12%)</td>
+<td style="text-align: left;">25 (13%)</td>
+<td style="text-align: left;">882 (11%)</td>
+<td style="text-align: left;">66 (17%)</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">recurring outpatient</td>
+<td style="text-align: left;">795 (9.4%)</td>
+<td style="text-align: left;">30 (15%)</td>
+<td style="text-align: left;">754 (9.6%)</td>
+<td style="text-align: left;">11 (2.8%)</td>
+<td style="text-align: left;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Missing</td>
+<td style="text-align: left;">7,077</td>
+<td style="text-align: left;">106</td>
+<td style="text-align: left;">6,492</td>
+<td style="text-align: left;">479</td>
+<td style="text-align: left;">NA</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>figure1 <span class="ot">&lt;-</span> <span class="fu">tbl_uvregression</span>(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    covid_testing,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> age,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">include =</span> <span class="fu">c</span>(col_rec_tat, rec_ver_tat),</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">label =</span> <span class="fu">list</span>(</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        col_rec_tat <span class="sc">~</span> <span class="st">"Time elapsed, collect time to receive time"</span>,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>        rec_ver_tat <span class="sc">~</span> <span class="st">"Time elapsed,  receive time to verification time"</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">method =</span> lm)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(figure1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Covid results </caption>
+<colgroup>
+<col style="width: 55%">
+<col style="width: 7%">
+<col style="width: 10%">
+<col style="width: 12%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><strong>Characteristic</strong></th>
+<th style="text-align: left;"><strong>N</strong></th>
+<th style="text-align: left;"><strong>Beta</strong></th>
+<th style="text-align: left;"><strong>95% CI</strong></th>
+<th style="text-align: left;"><strong>p-value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Time elapsed, collect time to receive time</td>
+<td style="text-align: left;">15,524</td>
+<td style="text-align: left;">0.00</td>
+<td style="text-align: left;">0.00, 0.00</td>
+<td style="text-align: left;">0.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Time elapsed, receive time to verification time</td>
+<td style="text-align: left;">15,524</td>
+<td style="text-align: left;">0.05</td>
+<td style="text-align: left;">0.00, 0.10</td>
+<td style="text-align: left;">0.067</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(covid_testing<span class="sc">$</span>age)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-one" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="Final-Project-Quarto_files/figure-html/fig-one-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;1: <strong>?(caption)</strong></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pos_age <span class="ot">&lt;-</span> <span class="fu">inline_text</span>(table1, <span class="at">variable =</span> <span class="st">"age"</span>, </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">column =</span> <span class="st">"positive"</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>neg_age <span class="ot">&lt;-</span> <span class="fu">inline_text</span>(table1, <span class="at">variable =</span> <span class="st">"age"</span>, </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">column =</span> <span class="st">"negative"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><a href="#tbl-one">Table&nbsp;1</a> contains a table of demographics by Covid test result, including age, gender, and patient class.</p>
+<p><a href="#fig-one">Figure&nbsp;1</a> contains a histogram of Covid-testing by patient age.</p>
+<p>The average age of patients with positive Covid tests (15 (4, 27)) was greater than the average age of patients with negative Covid tests (8 (2, 18)) patients tested positive for Covid-19.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>stats <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">n =</span> <span class="fu">nrow</span>(table1),</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">mean_age =</span> <span class="fu">mean</span>(table1<span class="sc">$</span>age))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in mean.default(table1$age): argument is not numeric or logical:
+returning NA</code></pre>
+</div>
+</div>
+<p>There were total participants with a mean age of NA.</p>
 </section>
 
 </main>
