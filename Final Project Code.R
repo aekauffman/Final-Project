@@ -1,4 +1,4 @@
-##Setting Up Github
+##Grader does not need to run this! Setting Up Github
 
 install.packages("usethis")
 
@@ -9,7 +9,7 @@ usethis::create_github_token()
 gitcreds::gitcreds_set()
 
 
-##Install Dataset from medicaldata Github and saving csv
+##Grader does not need to run this! Install Dataset from medicaldata Github and saving csv
 
 install.packages("medicaldata")
 library(medicaldata)
@@ -20,13 +20,15 @@ covid <- medicaldata::covid_testing
 
 write.csv(x = covid, file = "covid.csv")
 
+##################################################
+############## Graders, Start here! ##############
+##################################################
+
 
 ##Call file for data analysis from "Here", edit data file
 
 install.packages("here")
-covid_ <- read.csv(here::here("covid.csv"))
-
-covid_testing <- covid_[!(covid_$result == "invalid") ,]
+covid_testing <- read.csv(here::here("covid.csv"))
 
 
 ##Summary Table
@@ -84,11 +86,16 @@ mean.age.in.months(x = covid_testing$age)
 
 
 
+##################################################
+############## Graders, Stop here! ##############
+##################################################
+
 
 ##Adding renv
 install.packages("renv")
 renv::init()
 renv::snapshot()
+
 
 
 
